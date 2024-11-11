@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React from 'react';
 
 const Layout: React.FC = ({ children }) => {
@@ -14,6 +15,12 @@ const Layout: React.FC = ({ children }) => {
             <div className='absolute -top-40 -right-40 w-80 blur-3xl h-80 rounded-full bg-slate-900/20 '></div>
             <div className='absolute -bottom-40 -left-40 w-80 blur-3xl h-80 rounded-full bg-slate-900/20 '></div>
             <div className='absolute -bottom-40 -right-40 w-80 blur-3xl h-80 rounded-full bg-slate-900/20'></div>
+
+            <Link href="./pages/ModelMoove" className='absolute bottom-[15vh] left-[20vw] text-white text-3xl'>
+            aller a moove
+            </Link>
+
+            <p className='absolute bottom-[15vh] left-[20vw] text-white text-3xl'>GELOOO</p>
         {/* </div> */}
 
 
