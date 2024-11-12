@@ -21,6 +21,7 @@ body {
 }
 
 #canvas_fixed {
+  z-index: 20;
   position: fixed;
   top: 0;
 }

@@ -16,11 +16,11 @@ const Layout: React.FC = ({ children }) => {
             <div className='absolute -bottom-40 -left-40 w-80 blur-3xl h-80 rounded-full bg-slate-900/20 '></div>
             <div className='absolute -bottom-40 -right-40 w-80 blur-3xl h-80 rounded-full bg-slate-900/20'></div>
 
-            <Link href="./pages/ModelMoove" className='absolute bottom-[15vh] left-[20vw] text-white text-3xl'>
-            aller a moove
+            <Link href="./pages/ModelMoove" className='absolute bottom-[17vh] left-[25vw] text-white font-space-mono text-sm'>
+            go see my favorite photographer
             </Link>
 
-            <p className='absolute bottom-[15vh] left-[20vw] text-white text-3xl'>GELOOO</p>
+            {/* <p className='absolute bottom-[15vh] left-[20vw] text-white text-3xl'>GELOOO</p> */}
         {/* </div> */}
 
 

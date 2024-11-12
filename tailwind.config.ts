@@ -12,6 +12,10 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      fontFamily: {
+        'space-mono': ['var(--font-space-mono)'],
+      },
+      
     },
   },
   plugins: [],

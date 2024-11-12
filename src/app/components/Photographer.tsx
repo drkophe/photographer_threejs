@@ -140,7 +140,7 @@ export default function Photographer({ polaroid }) {
         // left: 0,
         width: '100vw',
         height: '100vh',
-        // zIndex: 10, // Met en arrière-plan
+        zIndex: 10, // Met en arrière-plan
       }} />
   );
 }
