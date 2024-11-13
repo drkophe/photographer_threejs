@@ -10,7 +10,7 @@ export default function Model() {
   const mountRef = useRef<HTMLDivElement>(null); // Référence au div contenant le rendu
   const mouse = new THREE.Vector2(0, 0); // Position de la souris normalisée pour Three.js
   const targetPosition = new THREE.Vector3(); // Position cible vers laquelle le modèle sera attiré
-  const { isHovered } = useHover();
+
 
   useEffect(() => {
     const scene = new THREE.Scene();
@@ -35,7 +35,7 @@ export default function Model() {
     });
 
     const loader = new GLTFLoader().setPath('/3dmodel/olympus_film_camera_pbr_scan_project3/');
-    let model;
+    let model: THREE.Object3D<THREE.Object3DEventMap>;
     loader.load('scene.gltf', (gltf) => {
       model = gltf.scene;
       model.position.set(0.05, -0.8, 0);
@@ -80,7 +80,7 @@ export default function Model() {
 
     window.addEventListener("scroll", handleScroll);
 
-    const onMouseMove = (event) => {
+    const onMouseMove = (event: { clientX: number; clientY: number; }) => {
       mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
       mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
     };
@@ -104,10 +104,10 @@ export default function Model() {
     return () => {
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("mousemove", onMouseMove);
-      mountRef.current?.removeChild(renderer.domElement);
-      renderer.dispose();
+      // mountRef.current?.removeChild(renderer.domElement);
+      renderer.dispose(); // 
     };
-  }, []);
+  }, [  ]);
 
   return (
     <div

@@ -3,6 +3,7 @@
 
 import Photo from "@/app/components/Photo";
 import { HoverProvider, useHover } from "@/app/components/HoverContext";
+import { useEffect } from "react";
 
 export default function PhotographersPages() {
     return (
@@ -14,6 +15,10 @@ export default function PhotographersPages() {
 
 function PhotographersContent() {
     const { isHovered, hoveredColor, hoveredPosition1, hoveredPosition2 } = useHover();
+
+    // useEffect(() => {
+    //     console.log("isHovered:", isHovered);
+    //   }, [isHovered]);
 
     return (
         <main
