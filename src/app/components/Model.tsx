@@ -4,43 +4,61 @@ import * as THREE from "three";
 import { useEffect, useRef } from "react";
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { RGBELoader } from "three/examples/jsm/Addons.js";
-import { useHover } from "./HoverContext";
+import { HoverProvider, useHover } from "./HoverContext";
 
 export default function Model() {
+  // -- Déclaration des variables
   const mountRef = useRef<HTMLDivElement>(null); // Référence au div contenant le rendu
+
+  // -- Définir les constantes neccessaires pour l'animation d'aimentation
   const mouse = new THREE.Vector2(0, 0); // Position de la souris normalisée pour Three.js
   const targetPosition = new THREE.Vector3(); // Position cible vers laquelle le modèle sera attiré
 
+  const { isHovered, hoveredColor } = useHover();
 
   useEffect(() => {
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(
+    console.log("isHovered:", isHovered);
+  }, [isHovered]);
+
+  useEffect(() => {
+            // Log pour tester l'état de isHovered
+            // console.log("isHovered:", isHovered);
+    /////////////////////////////// CREATE ///////////////////////////////
+    // -- Création la scène et la caméra
+    const scene = new THREE.Scene(); // Nouvelle scène
+    const camera = new THREE.PerspectiveCamera( // Caméra perspectif
       35,
       window.innerWidth / window.innerHeight,
       0.1,
       2000
     );
-    camera.position.set(0, 0.05, 3.5);
+    camera.position.set(0, 0.05, 3.5); // Position de base de la caméra
 
+    // -- Création du rendu
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.domElement.id = "canvas_fixed";
     renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setClearColor(0xffffff, 0);
-    mountRef.current.appendChild(renderer.domElement);
+    renderer.setClearColor(0xffffff, 0); // Transparence de la scène
+    mountRef.current!.appendChild(renderer.domElement); // Ajouter le rendu au DOM
 
+    // -- Création de l'environnement
     const rgbeLoader = new RGBELoader().setPath('/hdri/');
     rgbeLoader.load('kiara_1_dawn_2k.hdr', (texture) => {
       texture.mapping = THREE.EquirectangularReflectionMapping;
       scene.environment = texture;
     });
 
+    // -- Création du modèle
     const loader = new GLTFLoader().setPath('/3dmodel/olympus_film_camera_pbr_scan_project3/');
     let model: THREE.Object3D<THREE.Object3DEventMap>;
     loader.load('scene.gltf', (gltf) => {
       model = gltf.scene;
-      model.position.set(0.05, -0.8, 0);
+      model.position.set(0.13, -0.7, 0);
+      // model.position.lerp(new THREE.Vector3(0.13, -0.7, 0), 0.2);
       scene.add(model);
     });
+
+    //////////////////////////////// ANIMATION ///////////////////////////////
 
     window.addEventListener('resize', () => {
       camera.aspect = window.innerWidth / window.innerHeight;
@@ -78,6 +96,8 @@ export default function Model() {
       }
     };
 
+    handleScroll();
+
     window.addEventListener("scroll", handleScroll);
 
     const onMouseMove = (event: { clientX: number; clientY: number; }) => {
@@ -96,6 +116,11 @@ export default function Model() {
         model.position.lerp(targetPosition, 0.1); // La valeur 0.1 contrôle la vitesse d'aimantation
       }
 
+      // Remettre le modele à sa position initiale si on est en haut de la page avec une animation
+      if (!isBottomScroll && model) {
+        model.position.lerp(new THREE.Vector3(0.13, -0.7, 0), 0.1);
+      }
+
       renderer.render(scene, camera);
     };
 
@@ -104,15 +129,17 @@ export default function Model() {
     return () => {
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("mousemove", onMouseMove);
-      // mountRef.current?.removeChild(renderer.domElement);
+      mountRef.current?.removeChild(renderer.domElement);
       renderer.dispose(); // 
     };
-  }, [  ]);
+  }, [ isHovered, hoveredColor ]);
 
   return (
-    <div
-      ref={mountRef}
-      className="absolute top-0 left-0 w-screen h-screen pointer-events-none"
-    />
+    <HoverProvider>
+      <div
+        ref={mountRef}
+        className="absolute top-0 left-0 w-screen h-screen pointer-events-none"
+      />
+    </HoverProvider>
   );
 }

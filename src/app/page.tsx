@@ -8,6 +8,7 @@ import { HoverProvider, useHover } from "@/app/components/HoverContext"; // Assu
 import { useEffect } from "react";
 import Layout from "./components/Layout";
 import Nav from "./components/Nav";
+import Banner from "./components/Banner";
 
 export default function Home() {
 
@@ -15,6 +16,7 @@ export default function Home() {
     <HoverProvider>
       <main className="flex min-h-screen flex-col items-center justify-between overflow-hidden bg-[#504644] relative">
         <Nav/>
+        <Banner/>
         <Layout />
         <Model />
         <PageTest />

@@ -50,10 +50,10 @@ function PhotographersContent() {
                 }}
             />
 
-            <div className="absolute -bottom-52 flex flex-end z-30 ">
+            <div className="absolute -bottom-52 flex flex-end z-30">
                 <Photo
-                    photographer="kim"
-                    color="#facc15"
+                    photographer="guy"
+                    color="#8b5cf6"
                     position1={{ top: "20%", left: "0%" }}
                     position2={{ top: "10%", right: "0%" }}
                 />

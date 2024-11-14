@@ -15,6 +15,15 @@ export default {
       fontFamily: {
         'space-mono': ['var(--font-space-mono)'],
       },
+      animation: {
+        'infinite-scroll': 'infinite-scroll 60s linear infinite',
+      },
+      keyframes: {
+        'infinite-scroll': {
+          from: { transform: 'translateX(0)' },
+          to: { transform: 'translateX(-100%)' },
+        }
+      },
       
     },
   },
