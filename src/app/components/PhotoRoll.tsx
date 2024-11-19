@@ -5,38 +5,62 @@ import clsx from "clsx";
 import { motion } from "framer-motion";
 import Image from "next/image";
 
-const images = [
-  "/img/jason/global01.jpg",
-  "/img/jason/global02.jpg",
-  "/img/jason/global03.jpg",
-  "/img/jason/global04.jpg",
-  "/img/jason/global05.jpg", // Arrive au milieu
-  "/img/jason/global06.jpg",
-  "/img/jason/global07.jpg",
-  "/img/jason/global08.jpg",
-  "/img/jason/global09.jpg",
-];
+// const images = [
+//   "/img/jason/global01.jpg",
+//   "/img/jason/global02.jpg",
+//   "/img/jason/global03.jpg",
+//   "/img/jason/global04.jpg",
+//   "/img/jason/global05.jpg", 
+//   "/img/jason/global06.jpg", // Arrive au milieu
+//   "/img/jason/global07.jpg",
+//   "/img/jason/global08.jpg",
+//   "/img/jason/global09.jpg",
+// ];
 
-export default function PhotoRoll({ directionUp }) {
+export default function PhotoRoll({ directionUp, middle, selectImage }) {
   const [isSecondAnimation, setIsSecondAnimation] = useState(false);
-  setTimeout(() => setIsSecondAnimation(true), 2000);
+  setTimeout(() => setIsSecondAnimation(true), 1500);
+
+  const [isFinalAnimation, setIsFinalAnimation] = useState(false);
+  if (isSecondAnimation){
+    setTimeout(() => setIsFinalAnimation(true), 1500);
+  }
+
+  const images = [
+    `/img/jason/${selectImage}01.jpg`,
+    `/img/jason/${selectImage}02.jpg`,
+    `/img/jason/${selectImage}03.jpg`,
+    `/img/jason/${selectImage}04.jpg`,
+    `/img/jason/${selectImage}05.jpg`, 
+    `/img/jason/${selectImage}06.jpg`, // Arrive au milieu
+    `/img/jason/${selectImage}07.jpg`,
+    `/img/jason/${selectImage}08.jpg`,
+    `/img/jason/${selectImage}09.jpg`,
+    // "/img/jason/global01.jpg",
+    // "/img/jason/global02.jpg",
+    // "/img/jason/global03.jpg",
+    // "/img/jason/global04.jpg",
+    // "/img/jason/global05.jpg", 
+    // "/img/jason/global06.jpg", // Arrive au milieu
+    // "/img/jason/global07.jpg",
+    // "/img/jason/global08.jpg",
+    // "/img/jason/global09.jpg",
+  ];
 
   return (
+      // container vertical
       <motion.div
         className={clsx(
-          "space-y-6 relative w-fit h-fit flex",
+          "space-y-6 relative w-fit h-fit flex items-center justify-center",
           directionUp ? "flex-col" : "flex-col-reverse",
-          // isSecondAnimation ? "w-screen h-screen transform ease-in-out duration-1000 transition-all" : null
         )}
-        // initial={{ y: "0%" }}
         initial={{ y: directionUp ? "0%" : "-20%" }}
         animate={{ 
-          y: directionUp ? "-20%" : "0%",
-          // scale: isSecondAnimation ? 1.2 : 1, 
+          // y: directionUp ? "-17%" : "0%",
+          y: directionUp ? "-17.115%" : "0%",
         }}
-        // animate={{ y: "-20%" }} // La div monte légèrement
         transition={{
-          duration: 10, // Synchronisation avec les images
+          duration: 5, // Synchronisation avec les images
           ease: "easeInOut",
         }}
       >
@@ -44,26 +68,21 @@ export default function PhotoRoll({ directionUp }) {
           <motion.div
             key={index}
             className={clsx(
-              "relative w-80 h-48 overflow-hidden",
-              index === 4 ? "z-10" : null,
-              // index === 4 && isSecondAnimation ? "w-screen h-screen transform ease-in-out duration-1000 transition-all" : null
+              "overflow-hidden",
             )}
             initial={{
-              // y: "0vh",
-              y: directionUp ? "160vh" : "-120vh",
-              width: "320px",
-              height: "192px",
+              y: directionUp ? "180vh" : "-130vh",
+              width: "100vw",
+              height: "100vh",
+              scale: 0.1,
             }}
             animate={{
-              // y: "-120vh",
-              y: directionUp ? "30vh" : "0vh",
-              width: isSecondAnimation ? "640px" : "320px",
-              height: isSecondAnimation ? "384px" : "192px",
+              y: directionUp ? "55vh" : "-25vh",
+              scale: isSecondAnimation ? 1 : 0.1,
             }}
             transition={{
-              duration: index === 4 && isSecondAnimation ? 2 : 3,
-              // delay: index * 0.5,
-              delay: isSecondAnimation ? 0 : index * 0.5,
+              duration: isSecondAnimation ? 4 : 1.8,
+              delay: isSecondAnimation ? 0 : index * 0.3,
               ease: "easeInOut",
             }}
           >
@@ -72,6 +91,7 @@ export default function PhotoRoll({ directionUp }) {
               alt={`Image ${index + 1}`}
               layout="fill"
               objectFit="cover"
+              objectPosition="center"
               className=""
             />
           </motion.div>
